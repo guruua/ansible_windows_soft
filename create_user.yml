@@ -1,0 +1,24 @@
+- name: create user
+  hosts: windows
+  
+  tasks:
+    - name: remove script
+      ansible.windows.win_file:
+        path: C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\share.cmd
+        state: absent
+
+    - name: copy script
+      win_get_url:
+        url: ftp://192.168.1.5/install/share.cmd
+        dest: C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\share.cmd
+        url_username: anonymous
+        force: no
+
+        
+    - name: add user client
+      ansible.windows.win_user:
+        name: client
+        state: present
+        groups:
+          - Users
+        password_never_expires: true

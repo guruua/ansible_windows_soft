@@ -1,0 +1,78 @@
+- name: Install software for windows
+  hosts: w10a
+
+  tasks:
+
+    - name: Install chocolatey
+      chocolatey.chocolatey.win_chocolatey:
+        name:
+          - chocolatey
+          - chocolatey-core.extension
+        state: present
+
+    - name: Create directory install
+      ansible.windows.win_file:
+        path: C:\Install
+        state: directory
+
+    - name: Check office info
+      ansible.windows.win_stat:
+        path: 'c:\program files\microsoft office\office16\winword.exe'
+      register: word_stat
+
+    - name: Copy office install
+      ansible.windows.win_get_url:
+        url: ftp://192.168.1.5/install/of16.exe
+        dest: C:\install\office.exe
+        url_username: anonymous
+        force: false
+      when: not word_stat.stat.exists
+
+    - name: Install office
+      ansible.windows.win_package:
+        path: C:\install\office.exe
+        arguments: '-S /XO64U'
+      when: not word_stat.stat.exists
+
+    - name: Remove office installer
+      ansible.windows.win_file:
+        path: C:\Install\office.exe
+        state: absent
+      when: not word_stat.stat.exists
+
+    - name: Remove office installer directory
+      ansible.windows.win_file:
+        path: C:\office2016
+        state: absent
+      when: not word_stat.stat.exists
+
+    - name: Install chrome
+      chocolatey.chocolatey.win_chocolatey:
+        name: googlechrome
+        state: present
+
+    - name: Install winrar
+      chocolatey.chocolatey.win_chocolatey:
+        name: winrar
+        state: present
+        package_params: "'/LCID:uk'"
+
+    - name: Install fsviewer
+      chocolatey.chocolatey.win_chocolatey:
+        name: fsviewer
+        state: present
+
+    - name: Install Foxit
+      chocolatey.chocolatey.win_chocolatey:
+        name: foxitreader
+        state: present
+
+    - name: Install vlc
+      chocolatey.chocolatey.win_chocolatey:
+        name: vlc
+        state: present
+
+    - name: Install zoom
+      chocolatey.chocolatey.win_chocolatey:
+        name: zoom
+        state: present

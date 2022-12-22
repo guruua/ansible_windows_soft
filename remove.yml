@@ -1,0 +1,17 @@
+- name: Removes pkg
+  hosts: client01
+  become: yes
+
+  vars:
+    packages:
+             - htop
+             - traceroute
+             - apache2
+
+  tasks:
+
+    - name: remove packages
+      apt:
+        pkg: "{{packages}}"
+        state: absent
+
