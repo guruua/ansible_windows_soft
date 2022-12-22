@@ -1,6 +1,6 @@
 - name: create user
   hosts: windows
-  
+
   tasks:
     - name: remove script
       ansible.windows.win_file:
@@ -14,7 +14,6 @@
         url_username: anonymous
         force: no
 
-        
     - name: add user client
       ansible.windows.win_user:
         name: client
