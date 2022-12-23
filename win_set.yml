@@ -1,4 +1,5 @@
 - name: Install software for windows
+  hosts: w10a
 
   tasks:
 
