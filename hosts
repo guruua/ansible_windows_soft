@@ -1,9 +1,0 @@
-[linux]
-client01 ansible_host=192.168.1.18 ansible_user=teil ansible_ssh_private_key_file=/home/teil/.ssh/backupkey
-client02 ansible_host=192.168.1.16 ansible_user=backupadmin ansible_ssh_private_key_file=/home/teil/.ssh/backupkey
-
-[windows]
-w10a ansible_host=192.168.1.19 ansible_user=user ansible_password=test ansible_port=5986 ansible_connection=winrm ansible_winrm_server_cert_validation=ignore
-
-[old]
-grynda ansible_host=192.168.1.184 ansible_user=user ansible_password=test ansible_port=5986 ansible_connection=winrm ansible_winrm_server_cert_validation=ignore
